@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>pandemi-CAD</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge; chrome=1" />
+		<meta name="viewport" content="user-scalable=no, height=device-height, width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="description" content="pandemi-CAD - HTML5 Computer-aided Drafting software">
+		<meta name="keywords" content="pandemic CAD HTML Javascript">
+		<meta name="author" content="Albert M Thalheim">
+		<meta name="version" content="1.0">
+		<meta name="date" content="February 2021">
+
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.5.0-rc1/jquery.mobile-1.5.0-rc1.min.css" />
+		<style type="text/css">
+			[data-role=page  ] {height: 100% !important; position:relative !important;}
+			[data-role=header] {width:100%; background-color: lightgray;}  
+			[data-role=footer] {bottom:0; position:absolute !important; top: auto !important; width:100%;}  
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			html, body {
+				width: 100%;
+				height: 100%;
+				min-height: 100%;
+				overflow: hidden;
+			}
+			canvas {
+				cursor: none;
+			}
+		</style>
+		<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.5.0-rc1/jquery.mobile-1.5.0-rc1.min.js"></script>
+
+		<link rel="stylesheet" href="_css/contextmenu.css" />
+		<link rel="stylesheet" href="_css/cad.css" />
+
+		<!-- CAD Scripts.  ***  NOTE: Order is important!  *** -->
+
+		<script type="text/javascript" src="_js/cad.js"></script>
+		<script type="text/javascript" src="_js/parameters.js"></script>
+		<script type="text/javascript" src="_js/cadEvents.js"></script>
+		<script type="text/javascript" src="_js/browser.js"></script>
+		<script type="text/javascript" src="_js/user.js"></script>
+		<script type="text/javascript" src="_js/userTools.js"></script>
+
+		<script type="text/javascript" src="_js/messages.js"></script>
+		<script type="text/javascript" src="_js/print.js"></script>
+		<script type="text/javascript" src="_js/template.js"></script>
+		<script type="text/javascript" src="_js/paint.js"></script>
+		<script type="text/javascript" src="_js/track.js"></script>
+		<script type="text/javascript" src="_js/view.js"></script>
+
+		<!-- Structure -->
+		<script type="text/javascript" src="_js/style_layers.js"></script>
+		<script type="text/javascript" src="_js/style_lineTypes.js"></script>
+		<script type="text/javascript" src="_js/style_fontStyles.js"></script>
+		<script type="text/javascript" src="_js/block.js"></script>
+
+		<!-- Drawing Tools -->
+		<script type="text/javascript" src="_js/unit.js"></script>
+		<script type="text/javascript" src="_js/grid.js"></script>
+		<script type="text/javascript" src="_js/snap.js"></script>
+
+		<!-- Selection -->
+		<script type="text/javascript" src="_js/anchor.js"></script>
+		<script type="text/javascript" src="_js/selection.js"></script>
+
+		<!-- Model -->
+		<script type="text/javascript" src="_js/model.js"></script>
+		<script type="text/javascript" src="_js/modelTools.js"></script>
+		<script type="text/javascript" src="_js/modelList.js"></script>
+
+		<script type="text/javascript" src="_js/utils.js"></script>
+
+		<script type="text/javascript" src="_js/display_crosshairs.js"></script>
+		<script type="text/javascript" src="_js/display_menu.js"></script>
+		<script type="text/javascript" src="_js/display_statusBar.js"></script>
+		<script type="text/javascript" src="_js/display_tooltip.js"></script>
+		<script type="text/javascript" src="_js/display_toolbar.js"></script>
+
+		<!-- Input -->
+		<script type="text/javascript" src="_js/inputSingle.js"></script>
+		<script type="text/javascript" src="_js/inputSelect.js"></script>
+		<script type="text/javascript" src="_js/inputMultiple.js"></script>
+
+		<!-- Dimension Objects -->
+		<script type="text/javascript" src="_js/dimension.js"></script>
+		<!--  -->
+		<!-- Graphic Objects -->
+		<script type="text/javascript" src="_js/graphic_arc.js"></script>
+		<script type="text/javascript" src="_js/graphic_circle.js"></script>
+		<script type="text/javascript" src="_js/graphic_ellipse.js"></script>
+		<script type="text/javascript" src="_js/graphic_image.js"></script>
+		<script type="text/javascript" src="_js/graphic_insert.js"></script>
+		<script type="text/javascript" src="_js/graphic_line.js"></script>
+		<script type="text/javascript" src="_js/graphic_polyline.js"></script>
+		<script type="text/javascript" src="_js/graphic_rectangle.js"></script>
+		<script type="text/javascript" src="_js/graphic_sketch.js"></script>
+		<script type="text/javascript" src="_js/graphic_text.js"></script>
+		<!--  -->
+		<script type="text/javascript" src="_js/graphic__add.js"></script>
+		<script type="text/javascript" src="_js/graphic__array.js"></script>
+		<script type="text/javascript" src="_js/graphic__edit.js"></script>
+		<script type="text/javascript" src="_js/graphic__explode.js"></script>
+		<script type="text/javascript" src="_js/graphic__properties.js"></script>
+		<script type="text/javascript" src="_js/graphic__tools.js"></script>
+
+
+		<!-- Inner events -->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				cad.initialize();
+				$(window).bind('resize', function() {
+					resize();
+				});
+				$(window).bind('orientationchange', function() {
+					if ((window.orientation % 180) === 0) {
+						$('meta[name="viewport"]').attr('content', 'user-scalable=no, height=device-height, width=device-width, initial-scale=1, maximum-scale=1');
+					} else {
+						$('meta[name="viewport"]').attr('content', 'user-scalable=no, height=device-width, width=device-height, initial-scale=1, maximum-scale=1');
+					}
+					$(window).trigger('resize');
+				}).trigger('orientationchange');
+			});
+
+			function resize() {
+				var cadCanvas    = $('#cadCanvas')[0];
+				var headerHeight = $('[data-role="header"]').outerHeight();
+				var headerOffset = $('[data-role="header"]').offset();
+				var footerOffset = $('[data-role="footer"]').offset();
+				cadCanvas.width  = $(document).width();
+				cadCanvas.height = (footerOffset.top - (headerOffset.top + headerHeight));
+				cad.resize();
+			};
+		</script>
+	</head>
+	<body>
+		<div data-role="page" style="width: 100%;">
+			<header data-role="header" style="text-align: center;">
+				<h4 title ="A Computer-Aided Drawing Software, developed during the COVID-19 pandemic">pandemi-CAD - HTML5 Computer-aided Drafting software</h4>
+			</header>
+			<canvas id="cadCanvas" class="cadCanvas"></canvas>
+			<footer data-role="footer" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-mail ui-btn-icon-notext">
+				<table style="width:100%; background-color:#888888; font-size:medium;">
+					<tr>
+						<th style="text-align:left">
+						<a href="mailto:athalheim@gmail.com" title="athalheim@gmail.com" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-mail ui-btn-icon-notext">Mail</a>
+						</th>
+						<th style="text-align:right">&copy;2021, Albert M Thalheim</th>
+					</tr>
+				</table>
+			</footer>
+		</div>
+	</body>
+</html>
