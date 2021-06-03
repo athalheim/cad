@@ -1,0 +1,41 @@
+wheel pull to zoom:
+	loses focus
+
+
+stretch summit: TODO
+
+elliptical arc:
+	angles with rotation
+edit:
+	mirror
+	scale
+	stretch
+	rotate
+	trim
+
+Chamfer
+Fillet
+
+Divide
+Measure
+
+LineType scale:
+?	Layer
+	General
+	Object
+Groups
+	Add
+	Edit
+	Delete
+
+Insert/Reference
+
+Snap
+	Perpendicular: Done
+	Tangent
+	Ortho: Done
+	Intersection: ...
+
+Tests
+Documentation
+
