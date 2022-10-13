@@ -21,13 +21,10 @@ This software enables a user, from his workstation, to:
  Initial upload to GitHub
  
  WEB:
-   http://www.thalheim.ca/cad/
-  (Will be accessible for the next two years+/-)
- After 2023:
   -Setup a web site, 
-  -Copy averything from the cAD folder
+  -Copy averything from the CAD folder
   -Open using the 'index.html' page.
- You can also copy the CAD folder to your workstation: No load nor save possibl from this setup, though...
+ You can also copy the CAD folder to your workstation: No load nor save possibls from this setup, though...
  ----------------------
   
  There is a TODO list where you can learn the actual state of the project.
